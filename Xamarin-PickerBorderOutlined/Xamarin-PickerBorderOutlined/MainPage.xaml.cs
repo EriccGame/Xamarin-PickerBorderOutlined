@@ -14,5 +14,13 @@ namespace Xamarin_PickerBorderOutlined
         {
             InitializeComponent();
         }
+
+        private void StandardPickerOutlined_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (picker.SelectedIndex > -1)
+            {
+                var d = 0d;
+            }
+        }
     }
 }

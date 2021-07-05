@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -57,6 +57,14 @@ namespace Xamarin_PickerBorderOutlined.Controles
         public static BindableProperty ItemsSourceProperty =
             BindableProperty.Create(nameof(ItemsSource), typeof(IList), typeof(StandardEntry));
 
+        public static BindableProperty SelectedIndexProperty =
+            BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(StandardPickerOutlined), -1);
+
+        public int SelectedIndex
+        {
+            get => (int)GetValue(SelectedIndexProperty);
+            set => SetValue(SelectedIndexProperty, value);
+        }
         public View NextView
         {
             get => (View)GetValue(NextViewProperty);
@@ -137,15 +145,19 @@ namespace Xamarin_PickerBorderOutlined.Controles
         {
             InitializeComponent();
         }
-        public event EventHandler<EventArgs> TextChangedd;
 
-        private void PickerBorder_SelectedIndexChanged(object sender, EventArgs e)
+        public delegate void SelectedIndexChangedHandler(object sender, EventArgs e);
+
+        public event SelectedIndexChangedHandler SelectedIndexChanged;
+
+        public virtual async void OnSelectedIndexChanged(Object sender, EventArgs e)
         {
-            TextChangedd?.Invoke(this, e);
-            var picker = (Picker)sender;
-            int selectedIndex = picker.SelectedIndex;
+            SelectedIndexChanged?.Invoke(this, e);
 
-            this.Text = (selectedIndex != -1) ? (String)picker.ItemsSource[selectedIndex] : String.Empty;
+            if (this.SelectedIndex > -1)
+            {
+                await TranslateLabelToTitle();
+            }
         }
 
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
@@ -175,7 +187,7 @@ namespace Xamarin_PickerBorderOutlined.Controles
 
         private async Task TranslateLabelToPlaceHolder()
         {
-            if (String.IsNullOrEmpty(this.Text))
+            if (this.SelectedIndex == -1)
             {
                 await this.PlaceHolderLabel.TranslateTo(0, 0);
             }
@@ -188,5 +200,38 @@ namespace Xamarin_PickerBorderOutlined.Controles
             distance = control.Height + distance;
             return distance;
         }
+
+        //async void pckrMontoVale_SelectedIndexChanged(object sender, System.EventArgs e)
+        //{
+
+        //    List<AbonoPolitica> lstAbonosPorPolitica = new List<AbonoPolitica>();
+
+        //    if (pckrMontoVale.SelectedIndex > -1)
+        //    {
+
+        //        // Le decimos al ActivityIndicator que se está ejecutando algo para que se active
+        //        esperarActivityIndicator.IsRunning = true;
+        //        activityIndicatorContentView.IsVisible = true;
+
+        //        string strMonto = pckrMontoVale.Items[pckrMontoVale.SelectedIndex].Replace(".00", "").Replace("$", "").Replace(",", "");
+
+        //        lstAbonosPorPolitica = await LlamadasAPI.ObtenerAbonosPorPolitica(LlamadasAPI.usuarioDistribuidor.Codigo, strMonto);
+
+        //        // Aquí validamos si se pudo ejecutar
+        //        if (string.IsNullOrEmpty(LlamadasAPI.errorDescripcion))
+        //        {
+
+        //            abonosPorPoliticaListView.ItemsSource = lstAbonosPorPolitica;
+        //            abonosPorPoliticaListView.HeightRequest = (30 * lstAbonosPorPolitica.Count);
+
+        //        }
+
+        //        // Le decimos al ActivityIndicator que ya se terminó la ejecución
+        //        esperarActivityIndicator.IsRunning = false;
+        //        activityIndicatorContentView.IsVisible = false;
+
+        //    }
+
+        //}
     }
 }

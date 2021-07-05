@@ -9,23 +9,25 @@
         <Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
             <Label Text="Welcome to Xamarin.Forms!" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
         </Frame>
-        <Controles:StandardPickerOutlined Margin="5"
+        <Controles:StandardPickerOutlined x:Name="picker"
+                                          Margin="5"
                                           Placeholder="Monto"
                                           PlaceholderColor="Gray"
                                           PlaceholderBackgroundColor="White"
                                           BorderColor="HotPink"
                                           CornerRadius="5"
                                           TextColor="Black"
-                                          FontSize="14">
+                                          FontSize="14"
+                                          SelectedIndexChanged="StandardPickerOutlined_SelectedIndexChanged">
             <Controles:StandardPickerOutlined.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
-                    <x:String>Baboon</x:String>
-                    <x:String>Capuchin Monkey</x:String>
-                    <x:String>Blue Monkey</x:String>
-                    <x:String>Squirrel Monkey</x:String>
-                    <x:String>Golden Lion Tamarin</x:String>
-                    <x:String>Howler Monkey</x:String>
-                    <x:String>Japanese Macaque</x:String>
+                    <x:String>1000</x:String>
+                    <x:String>1500</x:String>
+                    <x:String>2000</x:String>
+                    <x:String>2500</x:String>
+                    <x:String>3000</x:String>
+                    <x:String>3500</x:String>
+                    <x:String>4000</x:String>
                 </x:Array>
             </Controles:StandardPickerOutlined.ItemsSource>
         </Controles:StandardPickerOutlined>

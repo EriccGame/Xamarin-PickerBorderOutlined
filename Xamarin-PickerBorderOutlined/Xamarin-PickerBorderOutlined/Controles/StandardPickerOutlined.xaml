@@ -14,19 +14,20 @@
                        Padding="5,0,5,0"
                        BackgroundColor="{Binding BackgroundColorEntry, Source={x:Reference this}}"
                        Margin="0"/>
-                
+
                 <Controles:StandardPicker x:Name="PickerBorder"
                                           VerticalOptions="FillAndExpand"
                                           HeightRequest="40"
                                           Image="down_arrow"
                                           Focused="PickerBorder_Focused"
                                           Unfocused="PickerBorder_Unfocused"
-                                          SelectedIndexChanged="PickerBorder_SelectedIndexChanged"
+                                          SelectedIndexChanged="OnSelectedIndexChanged"
                                           FontFamily="{Binding FontFamily, Source={x:Reference this}}"
                                           FontSize="{Binding FontSize, Source={x:Reference this}}"
                                           TextColor="{Binding TextColor, Source={x:Reference this}}"
                                           BackgroundColor="{Binding BackgroundColorEntry, Source={x:Reference this}}"
-                                          ItemsSource="{Binding ItemsSource, Source={x:Reference this}}">
+                                          ItemsSource="{Binding ItemsSource, Source={x:Reference this}}"
+                                          SelectedIndex="{Binding SelectedIndex, Source={x:Reference this}}">
                 </Controles:StandardPicker>
 
                 <Label x:Name="PlaceHolderLabel"
