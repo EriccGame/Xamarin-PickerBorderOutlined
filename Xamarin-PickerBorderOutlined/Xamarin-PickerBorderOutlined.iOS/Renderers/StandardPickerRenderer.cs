@@ -5,9 +5,29 @@ using System.Linq;
 using System.Text;
 using UIKit;
 
-namespace Xamarin_PickerBorderOutlined.iOS.Renderers
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
+
+using Xamarin_PickerBorderOutlined.Controles;
+using Xamarin_PickerBorderOutlined.iOS;
+
+[assembly: ExportRenderer(typeof(StandardPicker), typeof(StandardPickerRenderer))]
+namespace Xamarin_PickerBorderOutlined.iOS
 {
-    class StandardPickerRenderer
-    {
-    }
+	public class StandardPickerRenderer : PickerRenderer
+	{
+		protected override void OnElementChanged(ElementChangedEventArgs<Picker> e)
+		{
+			base.OnElementChanged(e);
+
+			var element = (StandardPicker)this.Element;
+
+			if (this.Control != null && this.Element != null && !string.IsNullOrEmpty(element.Image))
+			{
+				var downarrow = UIImage.FromBundle(element.Image);
+				Control.RightViewMode = UITextFieldViewMode.Always;
+				Control.RightView = new UIImageView(downarrow);
+			}
+		}
+	}
 }
